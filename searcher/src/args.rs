@@ -24,18 +24,6 @@ pub struct Args {
 
     #[arg(long)]
     revision: Option<String>,
-
-    /// When set, compute embeddings for this prompt.
-    #[arg(long)]
-    prompt: Option<String>,
-
-    /// The number of times to run the prompt.
-    #[arg(long, default_value = "1")]
-    n: usize,
-
-    /// L2 normalization for embeddings.
-    #[arg(long, default_value = "true")]
-    normalize_embeddings: bool,
 }
 
 impl Args {

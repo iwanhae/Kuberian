@@ -1,19 +1,39 @@
 mod args;
 mod embed;
 
-use anyhow::Result;
+use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
 use args::Args;
 use clap::Parser;
 use embed::encoder;
 
-fn main() -> Result<()> {
-    let args = Args::parse();
-    let (model, tokenizer) = args.build_model_and_tokenizer()?;
-    let enc = encoder::Encoder::new(model, tokenizer);
+#[get("/")]
+async fn hello() -> impl Responder {
+    HttpResponse::Ok().body(":-)")
+}
 
-    for _ in 1..10 {
-        let ys = enc.encode("Hello World").unwrap();
-        println!("{:?}", ys.shape())
-    }
-    Ok(())
+#[get("/q/{query}")]
+async fn search(path: web::Path<String>, enc: web::Data<encoder::Encoder>) -> impl Responder {
+    let q = path.to_string();
+    let vec = enc.encode(&q).unwrap().to_string();
+    HttpResponse::Ok().body(vec)
+}
+
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    let args = Args::parse();
+    let (model, tokenizer) = args.build_model_and_tokenizer().unwrap();
+    let enc = encoder::Encoder::new(model, tokenizer);
+    let mutexed_enc = web::Data::new(enc);
+
+    let result = HttpServer::new(move || {
+        App::new()
+            .app_data(mutexed_enc.clone())
+            .service(hello)
+            .service(search)
+    })
+    .bind(("0.0.0.0", 8080))?
+    .run()
+    .await;
+    println!("Server Terminated. Byebye :-)");
+    return result;
 }

@@ -33,7 +33,7 @@ impl Encoder {
         assert_eq!(embeddings.shape().dims(), [1, 128, 384]);
         let embeddings = embeddings.sum(1)? / (n_tokens as f64);
 
-        dbg!(start.elapsed());
+        dbg!(prompt, start.elapsed());
         embeddings?.get(0)
     }
 }
