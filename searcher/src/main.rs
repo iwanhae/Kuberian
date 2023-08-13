@@ -25,6 +25,7 @@ async fn main() -> std::io::Result<()> {
     let enc = encoder::Encoder::new(model, tokenizer);
     let mutexed_enc = web::Data::new(enc);
 
+    println!("Listen on 0.0.0.0:8080");
     let result = HttpServer::new(move || {
         App::new()
             .app_data(mutexed_enc.clone())

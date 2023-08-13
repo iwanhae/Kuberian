@@ -10,10 +10,6 @@ use tokenizers::Tokenizer;
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 pub struct Args {
-    /// Run on CPU rather than on GPU.
-    #[arg(long)]
-    cpu: bool,
-
     /// Run offline (you must have the files already cached)
     #[arg(long)]
     offline: bool,
@@ -28,7 +24,7 @@ pub struct Args {
 
 impl Args {
     pub fn build_model_and_tokenizer(&self) -> Result<(BertModel, Tokenizer)> {
-        let device = candle_examples::device(self.cpu)?;
+        let device = candle_examples::device(true)?;
         let default_model = "sentence-transformers/all-MiniLM-L6-v2".to_string();
 
         // source: https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/discussions/21
