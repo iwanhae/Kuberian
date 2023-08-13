@@ -1,6 +1,7 @@
 use crate::embed;
 
 use anyhow::{anyhow, Error as E, Result};
+use candle_core::Device;
 use candle_nn::VarBuilder;
 use clap::Parser;
 use embed::model::{BertModel, Config, DTYPE};
@@ -24,7 +25,7 @@ pub struct Args {
 
 impl Args {
     pub fn build_model_and_tokenizer(&self) -> Result<(BertModel, Tokenizer)> {
-        let device = candle_examples::device(true)?;
+        let device = Device::Cpu;
         let default_model = "sentence-transformers/all-MiniLM-L6-v2".to_string();
 
         // source: https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/discussions/21
