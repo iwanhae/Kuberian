@@ -6,8 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-candle-core = { git = "https://github.com/huggingface/candle.git" }
-candle-nn = { git = "https://github.com/huggingface/candle.git" }
+candle-core = { version = "0.1.0" }
+candle-nn = { version = "0.1.0" }
 tokenizers = { version = "0.13.3", default-features = true }
 anyhow = { version = "1", features = ["backtrace"] }
 serde = { version = "1.0.171", features = ["derive"] }
@@ -16,3 +16,11 @@ tracing = "0.1.37"
 hf-hub = "0.2.0"
 clap = { version = "4.2.4", features = ["derive"] }
 actix-web = "4"
+intel-mkl-src = { version = "0.8.1", features = [
+    "mkl-static-lp64-iomp",
+], optional = true }
+
+
+[features]
+default = []
+mkl = ["dep:intel-mkl-src", "candle-core/mkl", "candle-nn/mkl"]

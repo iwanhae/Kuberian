@@ -11,6 +11,10 @@ use tokenizers::Tokenizer;
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 pub struct Args {
+    /// teminate immediately (just for downloading BERT model)
+    #[arg(long)]
+    ci: bool,
+
     /// Run offline (you must have the files already cached)
     #[arg(long)]
     offline: bool,
@@ -24,6 +28,12 @@ pub struct Args {
 }
 
 impl Args {
+    pub fn terminate_if_ci(&self) {
+        if self.ci {
+            println!("terminating ci mode");
+            std::process::exit(0)
+        }
+    }
     pub fn build_model_and_tokenizer(&self) -> Result<(BertModel, Tokenizer)> {
         let device = Device::Cpu;
         let default_model = "sentence-transformers/all-MiniLM-L6-v2".to_string();

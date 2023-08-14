@@ -1,3 +1,5 @@
+#[cfg(feature = "mkl")]
+extern crate intel_mkl_src;
 mod args;
 mod embed;
 
@@ -25,6 +27,8 @@ async fn main() -> std::io::Result<()> {
     let enc = encoder::Encoder::new(model, tokenizer);
     let mutexed_enc = web::Data::new(enc);
 
+    args.terminate_if_ci();
+
     println!("Listen on 0.0.0.0:8080");
     let result = HttpServer::new(move || {
         App::new()
@@ -36,5 +40,5 @@ async fn main() -> std::io::Result<()> {
     .run()
     .await;
     println!("Server Terminated. Byebye :-)");
-    return result;
+    result
 }
