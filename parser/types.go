@@ -27,11 +27,12 @@ func (f Functions) Swap(i int, j int) {
 }
 
 type Function struct {
-	ID   uint64      `json:"id"`
-	Name string      `json:"name"`
-	File string      `json:"file"`
-	Code string      `json:"code"`
-	Line FunctionPos `json:"line"`
+	ID        uint64      `json:"id"`
+	Name      string      `json:"name"`
+	Signature string      `json:"signature"`
+	File      string      `json:"file"`
+	Code      string      `json:"code"`
+	Line      FunctionPos `json:"line"`
 }
 
 type FunctionPos struct {

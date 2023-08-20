@@ -83,11 +83,12 @@ func parseSrc(filename string) []Function {
 				start = fset.Position(d.Doc.Pos()).Line
 			}
 			end := fset.Position(d.End()).Line
-			name_pos := fset.Position(d.Name.Pos()).Line
-			name, _ := strings.CutSuffix(lines[name_pos-1], " {")
+			signature_pos := fset.Position(d.Name.Pos()).Line
+			signature, _ := strings.CutSuffix(lines[signature_pos-1], " {")
 
 			f = append(f, Function{
-				Name: name,
+				Name:      d.Name.Name,
+				Signature: signature,
 				Line: FunctionPos{
 					From: start,
 					To:   end,
