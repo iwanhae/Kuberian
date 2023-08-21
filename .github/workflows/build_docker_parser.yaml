@@ -43,7 +43,19 @@ jobs:
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
             type=semver,pattern={{version}}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker Builder image
+        id: build-and-push-cache
+        uses: docker/build-push-action@v4.1.1
+        with:
+          context: ./searcher
+          push: false
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          target: builder
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push Docker Main image
         id: build-and-push
         uses: docker/build-push-action@v4.1.1
         with:
@@ -52,4 +64,3 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
-          cache-to: type=gha,mode=max
