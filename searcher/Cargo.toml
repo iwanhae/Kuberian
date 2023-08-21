@@ -6,8 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-candle-core = { version = "0.1.0" }
-candle-nn = { version = "0.1.0" }
+candle = { package = "candle-core", version = "0.1.2" }
+candle-nn = { version = "0.1.2" }
 tokenizers = { version = "0.13.3", default-features = true }
 anyhow = { version = "1", features = ["backtrace"] }
 serde = { version = "1.0.171", features = ["derive"] }
@@ -23,4 +23,4 @@ intel-mkl-src = { version = "0.8.1", features = [
 
 [features]
 default = []
-mkl = ["dep:intel-mkl-src", "candle-core/mkl", "candle-nn/mkl"]
+mkl = ["dep:intel-mkl-src", "candle/mkl", "candle-nn/mkl"]

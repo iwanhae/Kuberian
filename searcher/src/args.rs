@@ -1,7 +1,7 @@
 use crate::embed;
 
 use anyhow::{anyhow, Error as E, Result};
-use candle_core::Device;
+use candle::Device;
 use candle_nn::VarBuilder;
 use clap::Parser;
 use embed::model::{BertModel, Config, DTYPE};
@@ -74,7 +74,7 @@ impl Args {
         let config: Config = serde_json::from_str(&config)?;
         let tokenizer = Tokenizer::from_file(tokenizer_filename).map_err(E::msg)?;
 
-        let weights = unsafe { candle_core::safetensors::MmapedFile::new(weights_filename)? };
+        let weights = unsafe { candle::safetensors::MmapedFile::new(weights_filename)? };
         let weights = weights.deserialize()?;
         let vb = VarBuilder::from_safetensors(vec![weights], DTYPE, &device);
         let model = BertModel::load(vb, &config)?;

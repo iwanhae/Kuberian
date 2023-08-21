@@ -1,7 +1,7 @@
 use super::model;
 
 use anyhow::Error as E;
-use candle_core::{Result, Tensor};
+use candle::{Result, Tensor};
 use std::time::Instant;
 use tokenizers::Tokenizer;
 
