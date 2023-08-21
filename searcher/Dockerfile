@@ -10,7 +10,7 @@ WORKDIR /usr/src/kuberian
 ENV HF_HOME=/model
 COPY Cargo.toml .
 COPY ci src/
-RUN cargo build -r
+RUN cargo build -r -F mkl
 RUN rm -rf src
 COPY . .
 RUN cargo install --path . -F mkl
