@@ -1,15 +1,12 @@
-pub mod models;
-pub mod schema;
-
-use diesel::r2d2::ConnectionManager;
-use diesel::r2d2::Pool;
-use diesel::sqlite::SqliteConnection;
 use std::env;
 
-pub fn establish_connection() -> Pool<ConnectionManager<SqliteConnection>> {
+use r2d2::Pool;
+use r2d2_sqlite::SqliteConnectionManager;
+
+pub fn new_connection_pool() -> Pool<SqliteConnectionManager> {
     let database_url = env::var("DATABASE_URL").unwrap_or_else(|_| String::from("./kuberian.db"));
-    let manger = ConnectionManager::<SqliteConnection>::new(database_url);
-    Pool::builder()
-        .build(manger)
-        .expect("Could not build connection pool")
+    let manager = SqliteConnectionManager::file(database_url);
+    let pool = Pool::new(manager).expect("fail to generate db connection pool");
+
+    pool
 }
