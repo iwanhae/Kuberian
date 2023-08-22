@@ -20,6 +20,9 @@ intel-mkl-src = { version = "0.8.1", features = [
     "mkl-static-lp64-iomp",
 ], optional = true }
 diesel = { version = "2.1.0", features = ["sqlite", "r2d2"] }
+usearch = "1.1.1"
+actix = "0.13.0"
+cxx = "1.0.106"
 
 
 [features]
