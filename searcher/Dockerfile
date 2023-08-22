@@ -23,6 +23,8 @@ RUN cargo install --path . -F mkl
 
 # Downloads Embedding Models or ETC
 ENV HF_HOME=/model
+ADD https://s3.iwanhae.kr/kuberian/kuberian.db ./kuberian.db
+ADD https://s3.iwanhae.kr/kuberian/kuberian.usearch ./kuberian.usearch
 RUN kuberian --ci
 
 FROM debian:11 as sqlite-fetcher
@@ -35,8 +37,8 @@ COPY --from=sqlite-fetcher /usr/lib/x86_64-linux-gnu/libsqlite3.so.* /usr/lib/
 COPY --from=builder /opt/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin/libiomp5.so /usr/lib/
 COPY --from=builder /model /model
 COPY --from=builder /usr/local/cargo/bin/kuberian /usr/local/bin/kuberian
-ADD https://s3.iwanhae.kr/kuberian/kuberian.db ./kuberian.db
-ADD https://s3.iwanhae.kr/kuberian/kuberian.usearch ./kuberian.usearch
+COPY --from=builder /usr/src/kuberian/kuberian.db ./kuberian.db
+COPY --from=builder /usr/src/kuberian/kuberian.usearch ./kuberian.usearch
 EXPOSE 8080
 ENV HF_HOME=/model
 CMD ["kuberian"]

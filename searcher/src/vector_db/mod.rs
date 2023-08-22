@@ -31,28 +31,9 @@ pub fn start() -> Addr<VectorDB> {
 impl Actor for VectorDB {
     type Context = Context<Self>;
 
-    fn started(&mut self, _ctx: &mut Context<Self>) {
-        let index = new_index(&IndexOptions {
-            metric: MetricKind::Cos,
-            quantization: ScalarKind::F16,
-            dimensions: 384,
-            connectivity: 0,
-            expansion_add: 0,
-            expansion_search: 0,
-        })
-        .unwrap();
+    fn started(&mut self, _ctx: &mut Context<Self>) {}
 
-        index
-            .load("./kuberian.usearch")
-            .expect("fail to load usearch index");
-
-        self.index = index;
-        dbg!("started");
-    }
-
-    fn stopped(&mut self, _ctx: &mut Context<Self>) {
-        dbg!("terminated");
-    }
+    fn stopped(&mut self, _ctx: &mut Context<Self>) {}
 }
 
 impl Handler<Query> for VectorDB {
