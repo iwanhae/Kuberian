@@ -25,8 +25,13 @@ RUN cargo install --path . -F mkl
 ENV HF_HOME=/model
 RUN kuberian --ci
 
+FROM debian:11 as sqlite-fetcher
+RUN apt update
+RUN apt-get install -y sqlite3
+
 FROM gcr.io/distroless/cc-debian11
 WORKDIR /app
+COPY --from=sqlite-fetcher /usr/lib/x86_64-linux-gnu/libsqlite3.so.* /usr/lib/
 COPY --from=builder /opt/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin/libiomp5.so /usr/lib/
 COPY --from=builder /model /model
 COPY --from=builder /usr/local/cargo/bin/kuberian /usr/local/bin/kuberian
