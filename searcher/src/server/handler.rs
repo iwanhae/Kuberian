@@ -11,6 +11,11 @@ use crate::{
     vector_db::{self, VectorDB},
 };
 
+#[get("/healthz")]
+async fn healthz() -> impl Responder {
+    HttpResponse::Ok().body("ok")
+}
+
 #[get("/")]
 async fn hello(pool: Data<Pool<SqliteConnectionManager>>) -> impl Responder {
     let conn = pool.get().unwrap();
@@ -29,7 +34,10 @@ async fn hello(pool: Data<Pool<SqliteConnectionManager>>) -> impl Responder {
 
     let mut samples: Vec<String> = vec![];
     for row in conn
-        .prepare_cached("SELECT summary FROM function_analyses ORDER BY RANDOM() LIMIT 10;")
+        .prepare_cached(
+            r"SELECT summary FROM function_analyses WHERE id 
+            IN (SELECT id FROM function_analyses ORDER BY RANDOM() LIMIT 10);",
+        )
         .unwrap()
         .query_map([], |row| row.get::<usize, String>(0))
         .unwrap()

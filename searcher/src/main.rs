@@ -50,6 +50,7 @@ async fn main() -> std::io::Result<()> {
             .app_data(app_data_encoder.clone())
             .app_data(app_data_database.clone())
             .app_data(app_data_vector.clone())
+            .service(server::handler::healthz)
             .service(server::handler::hello)
             .service(server::handler::search)
     })
