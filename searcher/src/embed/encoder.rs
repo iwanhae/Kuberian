@@ -36,7 +36,7 @@ impl Encoder {
 
         // mean pooling
         let embeddings = (embeddings.sum(1).unwrap() / (n_tokens as f64)).unwrap();
-        dbg!(prompt, start.elapsed());
+        debug!("{:?} {}", start.elapsed(), prompt);
         let tensor = normalize_l2(&embeddings).get(0).unwrap();
 
         let mut result: Vec<f32> = Vec::new();

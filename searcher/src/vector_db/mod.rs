@@ -22,7 +22,7 @@ pub fn start() -> Addr<VectorDB> {
     .unwrap();
 
     index
-        .load("./kuberian.usearch")
+        .view("./kuberian.usearch")
         .expect("fail to load usearch index");
 
     VectorDB { index }.start()
@@ -31,9 +31,13 @@ pub fn start() -> Addr<VectorDB> {
 impl Actor for VectorDB {
     type Context = Context<Self>;
 
-    fn started(&mut self, _ctx: &mut Context<Self>) {}
+    fn started(&mut self, _ctx: &mut Context<Self>) {
+        info!("vector db service initiated");
+    }
 
-    fn stopped(&mut self, _ctx: &mut Context<Self>) {}
+    fn stopped(&mut self, _ctx: &mut Context<Self>) {
+        error!("vector db service shutdown")
+    }
 }
 
 impl Handler<Query> for VectorDB {

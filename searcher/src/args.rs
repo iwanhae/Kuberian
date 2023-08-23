@@ -30,7 +30,7 @@ pub struct Args {
 impl Args {
     pub fn terminate_if_ci(&self) {
         if self.ci {
-            println!("terminating ci mode");
+            info!("terminating ci mode");
             std::process::exit(0)
         }
     }
