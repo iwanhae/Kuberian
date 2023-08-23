@@ -3,7 +3,7 @@ use cxx::UniquePtr;
 use usearch::ffi::{new_index, Index, IndexOptions, MetricKind, ScalarKind};
 
 #[derive(Message)]
-#[rtype(result = "Vec<i32>")]
+#[rtype(result = "Vec<(u64, f32)>")]
 pub struct Query(pub Vec<f32>);
 
 pub struct VectorDB {
@@ -37,14 +37,14 @@ impl Actor for VectorDB {
 }
 
 impl Handler<Query> for VectorDB {
-    type Result = Vec<i32>;
+    type Result = Vec<(u64, f32)>;
 
     fn handle(&mut self, msg: Query, _ctx: &mut Context<Self>) -> Self::Result {
         let result = self.index.search(&msg.0, 10).unwrap();
-        let mut converted: Vec<i32> = Vec::new();
+        let mut converted: Vec<(u64, f32)> = Vec::new();
 
-        for val in result.keys.iter() {
-            converted.push(i32::try_from(*val).unwrap())
+        for (i, val) in result.keys.iter().enumerate() {
+            converted.push((*val, *result.distances.get(i).unwrap()))
         }
 
         converted

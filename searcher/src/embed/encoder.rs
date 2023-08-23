@@ -1,7 +1,7 @@
 use super::model;
 
 use anyhow::Error as E;
-use candle::{Result, Tensor};
+use candle::Tensor;
 use std::time::Instant;
 use tokenizers::Tokenizer;
 
@@ -37,7 +37,7 @@ impl Encoder {
         // mean pooling
         let embeddings = (embeddings.sum(1).unwrap() / (n_tokens as f64)).unwrap();
         dbg!(prompt, start.elapsed());
-        let tensor = normalize_l2(&embeddings).unwrap().get(0).unwrap();
+        let tensor = normalize_l2(&embeddings).get(0).unwrap();
 
         let mut result: Vec<f32> = Vec::new();
         for i in 0..384 {
@@ -47,6 +47,7 @@ impl Encoder {
     }
 }
 
-pub fn normalize_l2(v: &Tensor) -> Result<Tensor> {
-    Ok(v.broadcast_div(&v.sqr()?.sum_keepdim(1)?.sqrt()?)?)
+pub fn normalize_l2(v: &Tensor) -> Tensor {
+    v.broadcast_div(&v.sqr().unwrap().sum_keepdim(1).unwrap().sqrt().unwrap())
+        .unwrap()
 }
