@@ -1,0 +1,20 @@
+{
+    "name": "Node",
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "mutantdino.resourcemonitor",
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "csstools.postcss",
+                "mhutchie.git-graph"
+            ]
+        }
+    },
+    "postCreateCommand": "npm install",
+    "forwardPorts": [
+        3000
+    ],
+    "remoteUser": "node"
+}
