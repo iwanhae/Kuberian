@@ -6,23 +6,31 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "demo": "npx @cloudflare/next-on-pages@1 && wrangler pages dev .vercel/output/static"
   },
   "dependencies": {
     "@types/node": "20.5.4",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
-    "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
     "next": "13.4.19",
     "postcss": "8.4.28",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tailwindcss": "3.3.3",
-    "typescript": "5.1.6"
+    "tailwindcss": "3.3.3"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.5.1"
+    "@cloudflare/next-on-pages": "^1.5.1",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "eslint": "^8.47.0",
+    "eslint-config-standard-with-typescript": "^38.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-n": "^16.0.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.33.2",
+    "typescript": "^5.2.2",
+    "wrangler": "^3.6.0"
   }
 }
