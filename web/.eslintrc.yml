@@ -4,6 +4,7 @@ env:
 extends:
   - standard-with-typescript
   - plugin:react/recommended
+  - plugin:prettier/recommended
   - next/core-web-vitals
 parserOptions:
   ecmaVersion: latest
@@ -12,4 +13,5 @@ parserOptions:
     - ./tsconfig.json
 plugins:
   - react
-rules: {}
+rules:
+  prettier/prettier: "error"
