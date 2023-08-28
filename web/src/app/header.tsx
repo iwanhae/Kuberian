@@ -1,7 +1,20 @@
+"use client";
 import { LinkExternalIcon, SearchIcon } from "@primer/octicons-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-export default async function Header(): Promise<JSX.Element> {
+interface Props {
+  query?: string;
+}
+
+export default function Header(props: Props): JSX.Element {
+  const [query, setQuery] = useState(props.query ?? "");
+  const router = useRouter();
+  useEffect(() => {
+    if (query === "") router.push(`/`);
+    else router.push(`/q/${query}`);
+  }, [router, query]);
   return (
     <header className="h-72 bg-[#f7f8fc] border-b-[1px] p-2">
       <div className="max-w-3xl h-full m-auto pb-6 flex flex-col justify-end gap-2">
@@ -19,6 +32,10 @@ export default async function Header(): Promise<JSX.Element> {
             className="w-full text-2xl sm:text-3xl focus-visible:outline-none my-auto"
             placeholder="describe whatever you want to find"
             autoFocus
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
           />
         </div>
         <div></div>

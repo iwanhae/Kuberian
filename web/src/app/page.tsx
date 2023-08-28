@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Card from "./card";
 import Header from "./header";
+import { SERVER_URL } from "@/config";
 
 export const runtime = "edge";
 
@@ -9,7 +10,7 @@ async function getData(): Promise<{
   analyzed: number;
   samples: string[];
 }> {
-  const res = await fetch("https://kuberian-thoe7ww5ya-an.a.run.app/", {
+  const res = await fetch(SERVER_URL(), {
     next: { revalidate: 5 },
   });
 
