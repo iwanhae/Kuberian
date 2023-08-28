@@ -48,7 +48,9 @@ impl Handler<Query> for VectorDB {
         let mut converted: Vec<(u64, f32)> = Vec::new();
 
         for (i, val) in result.keys.iter().enumerate() {
-            converted.push((*val, *result.distances.get(i).unwrap()))
+            let distance = *result.distances.get(i).unwrap();
+            let score = 1_f32 - distance.abs();
+            converted.push((*val, score))
         }
 
         converted
