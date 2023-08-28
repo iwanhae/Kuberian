@@ -53,6 +53,9 @@ async fn main() -> std::io::Result<()> {
             .service(server::handler::healthz)
             .service(server::handler::hello)
             .service(server::handler::search)
+            .service(server::handler::list_dirs)
+            .service(server::handler::list_dirs_docs)
+            .service(server::handler::get_docs)
     })
     .bind(("0.0.0.0", 8080))?
     .run()
