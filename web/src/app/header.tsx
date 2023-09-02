@@ -18,8 +18,8 @@ export default function Header(props: Props): JSX.Element {
 
   // detect loading
   useEffect(() => {
-    if (props.query !== debouncedQuery) setLoading(true);
-    else setLoading(false);
+    if ((props.query ?? "") === debouncedQuery) setLoading(false);
+    else setLoading(true);
   }, [props.query, debouncedQuery]);
 
   // push router
