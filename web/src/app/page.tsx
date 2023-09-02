@@ -29,7 +29,7 @@ export default async function Page(): Promise<JSX.Element> {
       <Header />
       <main className="flex flex-col">
         <div className="max-w-3xl w-full m-auto py-8 gap-4">
-          <Card>
+          <Card className="flex flex-col gap-1">
             <p className="text-3xl font-semibold">{`👋 Hi! I'm Kuberian!`} </p>
             <p className="text-xl">{`If you are`}</p>
             <ol className="list-disc list-outside pl-5 text-xl">

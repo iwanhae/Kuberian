@@ -13,7 +13,7 @@ interface Props {
 export default function Header(props: Props): JSX.Element {
   const [query, setQuery] = useState(props.query ?? "");
   const [loading, setLoading] = useState(false);
-  const debouncedQuery = useDebounce(query, 300);
+  const debouncedQuery = useDebounce(query, 500);
   const router = useRouter();
 
   // detect loading
