@@ -2,7 +2,9 @@
 import { LinkExternalIcon, SearchIcon } from "@primer/octicons-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useDebounce } from "usehooks-ts";
 import { useEffect, useState } from "react";
+import Spinner from "./spinner";
 
 interface Props {
   query?: string;
@@ -10,11 +12,22 @@ interface Props {
 
 export default function Header(props: Props): JSX.Element {
   const [query, setQuery] = useState(props.query ?? "");
+  const [loading, setLoading] = useState(false);
+  const debouncedQuery = useDebounce(query, 300);
   const router = useRouter();
+
+  // detect loading
   useEffect(() => {
-    if (query === "") router.push(`/`);
-    else router.push(`/q/${query}`);
-  }, [router, query]);
+    if (props.query !== debouncedQuery) setLoading(true);
+    else setLoading(false);
+  }, [props.query, debouncedQuery]);
+
+  // push router
+  useEffect(() => {
+    if (debouncedQuery === "") router.push(`/`);
+    else router.push(`/q/${debouncedQuery}`);
+  }, [router, debouncedQuery]);
+
   return (
     <header className="h-72 bg-[#f7f8fc] border-b-[1px] p-2">
       <div className="max-w-3xl h-full m-auto pb-6 flex flex-col justify-end gap-2">
@@ -49,6 +62,7 @@ export default function Header(props: Props): JSX.Element {
             <p>Kubernetes</p>
             <LinkExternalIcon className="mt-auto mb-1" />
           </a>
+          {loading && <Spinner className="my-auto ml-auto" />}
         </h1>
       </div>
     </header>
