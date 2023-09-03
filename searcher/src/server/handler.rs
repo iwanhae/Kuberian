@@ -226,9 +226,9 @@ async fn get_docs(
         docs.push(doc.unwrap());
     });
 
-    if docs.len() == 0 {
+    if docs.is_empty() {
         return HttpResponse::NotFound().json(json!({"msg": "Not Found :-("}));
     }
 
-    HttpResponse::Ok().json(docs)
+    HttpResponse::Ok().json(docs.get(0).unwrap())
 }
