@@ -1,6 +1,4 @@
-import Link from "next/link";
 import Card from "./card";
-import Header from "./header";
 import { SERVER_URL } from "@/config";
 
 export const runtime = "edge";
@@ -26,7 +24,6 @@ export default async function Page(): Promise<JSX.Element> {
 
   return (
     <>
-      <Header />
       <main className="flex flex-col">
         <div className="max-w-3xl w-full m-auto py-8 gap-4">
           <Card className="flex flex-col gap-1">
@@ -53,14 +50,13 @@ export default async function Page(): Promise<JSX.Element> {
                 .slice(0, 5)
                 .map((v, i) => {
                   return (
-                    <Link
+                    <a
                       key={i}
                       className="p-2 border first:rounded-t-lg last:rounded-b-lg odd:bg-slate-100 hover:bg-sky-200 cursor-pointer transition-all text-ellipsis whitespace-nowrap overflow-hidden"
-                      prefetch={false}
                       href={`/q/${v}`}
                     >
                       {v}
-                    </Link>
+                    </a>
                   );
                 })}
             </div>

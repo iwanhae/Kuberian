@@ -1,40 +1,46 @@
 "use client";
 import { LinkExternalIcon, SearchIcon } from "@primer/octicons-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useDebounce } from "usehooks-ts";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Spinner from "./spinner";
 
-interface Props {
-  query?: string;
-}
-
-export default function Header(props: Props): JSX.Element {
-  const [query, setQuery] = useState(props.query ?? "");
+export default function Header(): JSX.Element {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [query, setQuery] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const debouncedQuery = useDebounce(query, 500);
   const router = useRouter();
-
-  // detect loading
-  useEffect(() => {
-    if ((props.query ?? "") === debouncedQuery) setLoading(false);
-    else setLoading(true);
-  }, [props.query, debouncedQuery]);
+  const pathname = usePathname();
 
   // push router
   useEffect(() => {
     if (debouncedQuery === "") router.push(`/`);
-    else router.push(`/q/${debouncedQuery}`);
+    else if (debouncedQuery !== null) router.push(`/q/${debouncedQuery}`);
   }, [router, debouncedQuery]);
+
+  // set Loading status
+  useEffect(() => {
+    const q = decodeURI(pathname.substring(pathname.lastIndexOf("/") + 1));
+    if (q !== debouncedQuery) setLoading(true);
+    else setLoading(false);
+  }, [debouncedQuery, pathname]);
+
+  // set input field only for a initial execution
+  useEffect(() => {
+    const url = document.URL;
+    const q = decodeURI(url.substring(url.lastIndexOf("/") + 1));
+    if (inputRef.current != null) inputRef.current.value = q;
+    setQuery(q);
+  }, []);
 
   return (
     <header className="h-72 bg-[#f7f8fc] border-b-[1px] p-2">
       <div className="max-w-3xl h-full m-auto pb-6 flex flex-col justify-end gap-2">
         <h3>
-          <Link href={"/"} className="hover:text-sky-500 transition-all">
+          <a href={"/"} className="hover:text-sky-500 transition-all">
             Kubernetes Librarian : Kuberian
-          </Link>
+          </a>
         </h3>
         <h1 className="text-3xl sm:text-4xl font-bold">Find functions that</h1>
         <div></div>
@@ -45,7 +51,7 @@ export default function Header(props: Props): JSX.Element {
             className="w-full text-2xl sm:text-3xl focus-visible:outline-none my-auto"
             placeholder="describe whatever you want to find"
             autoFocus
-            value={query}
+            ref={inputRef}
             onChange={(e) => {
               setQuery(e.target.value);
             }}

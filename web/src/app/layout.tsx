@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import Header from "./header";
 
 export const metadata: Metadata = {
   title: "Kuberian",
@@ -13,7 +14,10 @@ export default function RootLayout({
 }): JSX.Element {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }

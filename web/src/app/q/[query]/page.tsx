@@ -57,23 +57,20 @@ export default async function Page({
   return (
     <>
       <main className="flex flex-col">
-        <div className="dummy shadow-sky-100 shadow-red-100 shadow-yellow-100 shadow-orange-100" />
+        <div className="dummy border-sky-500 bg-sky-50 border-yellow-500 bg-yellow-50 border-orange-500 bg-orange-50 border-red-500 bg-red-50" />
         <div className="max-w-3xl w-full m-auto py-8 flex flex-col gap-5">
           {data.results
             .sort((a, b) => (a.score < b.score ? 1 : -1))
             .map((e) => {
               const doc = docs[e.id];
-              let shadowColor = "gray";
-              if (e.score > 0.8) shadowColor = "sky";
-              else if (e.score > 0.6) shadowColor = "yellow";
-              else if (e.score > 0.4) shadowColor = "orange";
-              else shadowColor = "red";
+              let color = "gray";
+              if (e.score > 0.8) color = "sky";
+              else if (e.score > 0.6) color = "yellow";
+              else if (e.score > 0.4) color = "orange";
+              else color = "red";
               return (
-                <Card
-                  key={e.id}
-                  className={`flex flex-col shadow-${shadowColor}-100`}
-                >
-                  <div className="flex gap-1">
+                <Card key={e.id} className="flex flex-col overflow-x-auto">
+                  <div className="flex gap-1 min-w-fit">
                     <a
                       className="text-2xl text-[#006bb8] hover:underline font-medium"
                       href={`https://github.com/kubernetes/kubernetes/blob/v1.27.4/${doc.file}#L${doc.line.start}-L${doc.line.end}`}
@@ -82,6 +79,13 @@ export default async function Page({
                       {doc.name}
                     </a>
                     <LinkExternalIcon className="mt-auto mb-2" size={13} />
+                    <div
+                      className={`my-auto ml-auto border-2 border-${color}-500 bg-${color}-50 w-10 h-10 rounded-full flex`}
+                    >
+                      <p className="m-auto font-mono">
+                        {(e.score * 100).toFixed()}
+                      </p>
+                    </div>
                   </div>
                   <p className="font-medium">{doc.file}</p>
                   <p>{doc.summary}</p>
