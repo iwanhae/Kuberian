@@ -1,7 +1,11 @@
+"use client";
+import "./github-light.css";
 import { type Doc } from "@/types";
 import Card from "./card";
 import Link from "next/link";
 import { LinkExternalIcon } from "@primer/octicons-react";
+import { useEffect } from "react";
+import hljs from "highlight.js";
 
 export default function FunctionCard({
   doc,
@@ -10,6 +14,10 @@ export default function FunctionCard({
   doc: Doc;
   score?: number;
 }): JSX.Element {
+  useEffect(() => {
+    hljs.highlightAll();
+  }, []);
+
   let color = "gray";
   if (score !== undefined) {
     if (score > 0.8) color = "sky";
@@ -38,6 +46,37 @@ export default function FunctionCard({
       </div>
       <p className="font-medium">{doc.file}</p>
       {doc.summary !== undefined && <p>{doc.summary}</p>}
+      {doc.extra !== undefined && (
+        <>
+          <pre className="overflow-auto border rounded-lg text-sm my-4">
+            <code className="language-go">{doc.extra.code}</code>
+          </pre>
+          <section>
+            <h5 className="font-bold">Background</h5>
+            <p className="whitespace-pre-wrap indent-2">
+              {doc.extra.background}
+            </p>
+          </section>
+          <section>
+            <h5 className="font-bold">Anaylsis</h5>
+            <p className="whitespace-pre-wrap indent-2">{doc.extra.analysis}</p>
+          </section>
+          <section>
+            <h5 className="font-bold">Purpose</h5>
+            <p className="whitespace-pre-wrap indent-2">{doc.extra.purpose}</p>
+          </section>
+          <hr className="my-4 h-0.5 border-t-0 bg-neutral-100 opacity-100" />
+          <section>
+            <h5 className="font-bold">Comment</h5>
+            <p className="whitespace-pre-wrap indent-2">{doc.extra.comment}</p>
+          </section>
+          <hr className="my-4 h-0.5 border-t-0 bg-neutral-100 opacity-100" />
+          <section>
+            <h5 className="font-bold">Opinion</h5>
+            <p className="whitespace-pre-wrap indent-2">{doc.extra.opinion}</p>
+          </section>
+        </>
+      )}
     </Card>
   );
 }
