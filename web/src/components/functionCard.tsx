@@ -45,8 +45,8 @@ export default function FunctionCard({
         )}
       </div>
       <p className="font-medium">{doc.file}</p>
-      {doc.summary !== undefined && <p>{doc.summary}</p>}
-      {doc.extra !== undefined && (
+      {doc.summary != null && <p>{doc.summary}</p>}
+      {doc.extra != null && (
         <>
           <pre className="overflow-auto border rounded-lg text-sm my-4">
             <code className="language-go">{doc.extra.code}</code>
