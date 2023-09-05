@@ -1,5 +1,6 @@
-import Card from "./card";
+import Card from "@/components/card";
 import { SERVER_URL } from "@/config";
+import Header from "./header";
 
 export const runtime = "edge";
 
@@ -24,6 +25,7 @@ export default async function Page(): Promise<JSX.Element> {
 
   return (
     <>
+      <Header />
       <main className="flex flex-col">
         <div className="max-w-3xl w-full m-auto py-8 gap-4">
           <Card className="flex flex-col gap-1">

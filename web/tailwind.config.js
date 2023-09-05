@@ -14,5 +14,15 @@ module.exports = {
       },
     },
   },
+  safelist: [
+    "border-sky-500",
+    "bg-sky-50",
+    "border-yellow-500", 
+    "bg-yellow-50",
+    "border-orange-500",
+    "bg-orange-50",
+    "border-red-500",
+    "bg-red-50"
+  ],
   plugins: [],
 }

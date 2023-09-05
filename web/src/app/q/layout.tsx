@@ -1,5 +1,5 @@
-import "./globals.css";
 import type { Metadata } from "next";
+import Header from "@/app/header";
 
 export const metadata: Metadata = {
   title: "Kuberian",
@@ -12,8 +12,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <>
+      <Header />
+      {children}
+    </>
   );
 }
