@@ -10,6 +10,7 @@
     "demo": "npx @cloudflare/next-on-pages@1 && wrangler pages dev .vercel/output/static"
   },
   "dependencies": {
+    "@giscus/react": "^2.3.0",
     "@primer/octicons-react": "^19.6.0",
     "@types/node": "20.5.4",
     "@types/react": "18.2.21",
