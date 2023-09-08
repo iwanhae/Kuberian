@@ -2,6 +2,8 @@ import FunctionCard from "@/components/functionCard";
 import { SERVER_URL } from "@/config";
 import { type DocResponse } from "@/types";
 import GoBack from "./goBack";
+import SearchReselt from "@/app/q/[query]/searchResult";
+import Card from "@/components/card";
 
 export const runtime = "edge";
 
@@ -29,6 +31,15 @@ export default async function Page({
         <div className="max-w-3xl w-full m-auto py-8 flex flex-col gap-5">
           <GoBack />
           <FunctionCard doc={data} />
+          {data.summary != null && (
+            <>
+              <Card className="flex justify-center gap-5 hover:bg-slate-100">
+                <p className="my-auto font-mono">Related top 10</p>
+              </Card>
+              <SearchReselt query={data.summary} />
+            </>
+          )}
+          <GoBack />
         </div>
       </main>
     </>
