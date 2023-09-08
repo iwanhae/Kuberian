@@ -1,6 +1,7 @@
 import FunctionCard from "@/components/functionCard";
 import { SERVER_URL } from "@/config";
 import { type DocResponse } from "@/types";
+import GoBack from "./goBack";
 
 export const runtime = "edge";
 
@@ -26,6 +27,7 @@ export default async function Page({
     <>
       <main className="flex flex-col">
         <div className="max-w-3xl w-full m-auto py-8 flex flex-col gap-5">
+          <GoBack />
           <FunctionCard doc={data} />
         </div>
       </main>
