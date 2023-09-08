@@ -35,7 +35,9 @@ export default function FunctionCard({
         >
           {doc.name}
         </Link>
-        <LinkExternalIcon className="mt-auto mb-2" size={13} />
+        <div className="relative">
+          <LinkExternalIcon className="absolute top-3.5" size={13} />
+        </div>
         {score !== undefined && (
           <div
             className={`my-auto ml-auto border-2 border-${color}-500 bg-${color}-50 w-10 h-10 rounded-full flex`}
