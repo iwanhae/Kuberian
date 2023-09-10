@@ -3,8 +3,7 @@ import { SERVER_URL } from "@/config";
 import { type Doc, type SearchResponse } from "@/types";
 
 async function getData(query: string): Promise<SearchResponse> {
-  const sanitized = encodeURIComponent(query);
-  const res = await fetch(SERVER_URL(`/q/${sanitized}`), {
+  const res = await fetch(SERVER_URL(`/q/${query}`), {
     next: { revalidate: 5 },
   });
 
