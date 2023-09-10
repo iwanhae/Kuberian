@@ -16,12 +16,15 @@ export default function Header(): JSX.Element {
   // push router
   useEffect(() => {
     if (debouncedQuery === "") router.push(`/`);
-    else if (debouncedQuery !== null) router.push(`/q/${debouncedQuery}`);
+    else if (debouncedQuery !== null)
+      router.push(`/q/${encodeURIComponent(debouncedQuery)}`);
   }, [router, debouncedQuery]);
 
   // set Loading status
   useEffect(() => {
-    const q = decodeURI(pathname.substring(pathname.lastIndexOf("/") + 1));
+    const q = decodeURIComponent(
+      pathname.substring(pathname.lastIndexOf("/") + 1),
+    );
     if (q !== debouncedQuery) setLoading(true);
     else setLoading(false);
   }, [debouncedQuery, pathname]);
@@ -29,7 +32,7 @@ export default function Header(): JSX.Element {
   // set input field only for a initial execution
   useEffect(() => {
     const url = document.URL;
-    const q = decodeURI(url.substring(url.lastIndexOf("/") + 1));
+    const q = decodeURIComponent(url.substring(url.lastIndexOf("/") + 1));
     if (inputRef.current != null) inputRef.current.value = q;
     setQuery(q);
   }, []);
