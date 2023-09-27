@@ -1,3 +1,4 @@
+import Script from "next/script";
 import Footer from "./footer";
 import "./globals.css";
 import type { Metadata } from "next";
@@ -14,6 +15,7 @@ export default function RootLayout({
 }): JSX.Element {
   return (
     <html lang="en">
+      <Script src="/elastic-apm-rum.umd.min.js" />
       <body>
         {children}
         <Footer />
