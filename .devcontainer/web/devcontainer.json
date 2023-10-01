@@ -1,5 +1,5 @@
 {
-    "name": "Node",
+    "name": "web",
     "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
     "customizations": {
         "vscode": {
@@ -17,5 +17,7 @@
     "forwardPorts": [
         3000
     ],
-    "remoteUser": "node"
+    "remoteUser": "node",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+    "workspaceFolder": "/workspace/web"
 }
