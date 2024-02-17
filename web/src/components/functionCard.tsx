@@ -31,7 +31,7 @@ export default function FunctionCard({
       <div className="flex gap-1 min-w-fit">
         <Link
           className="text-2xl text-[#006bb8] hover:underline font-medium"
-          href={`/docs/${doc.id}`}
+          href={doc.extra == null ? `/docs/${doc.id}` : `https://github.com/kubernetes/kubernetes/blob/v1.27.4/${doc.file}#L${doc.line.start}-L${doc.line.end}`}
         >
           {doc.name}
         </Link>
