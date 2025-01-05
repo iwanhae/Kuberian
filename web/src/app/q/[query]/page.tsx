@@ -3,10 +3,11 @@ import SearchReselt from "./searchResult";
 export const runtime = "edge";
 
 export default async function Page({
-  params: { query },
+  params,
 }: {
-  params: { query: string };
+  params: Promise<{ query: string }>;
 }): Promise<JSX.Element> {
+  const query = (await params).query;
   return (
     <>
       <main className="flex flex-col">

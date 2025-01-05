@@ -20,11 +20,12 @@ async function getData(query: number): Promise<DocResponse> {
 }
 
 export default async function Page({
-  params: { id },
+  params,
 }: {
-  params: { id: number };
+  params: Promise<{ id: number }>;
 }): Promise<JSX.Element> {
-  const data = await getData(id);
+  const props = await params;
+  const data = await getData(props.id);
   return (
     <>
       <main className="flex flex-col">

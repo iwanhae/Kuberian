@@ -1,7 +1,7 @@
 import Footer from "./footer";
 import "./globals.css";
 import type { Metadata } from "next";
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   title: "Kuberian",
