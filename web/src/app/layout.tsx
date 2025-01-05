@@ -1,6 +1,7 @@
 import Footer from "./footer";
 import "./globals.css";
 import type { Metadata } from "next";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
   title: "Kuberian",
@@ -14,6 +15,7 @@ export default function RootLayout({
 }): JSX.Element {
   return (
     <html lang="en">
+      <GoogleAnalytics gaId="G-XKGGE4VF4Y" />
       <body>
         {children}
         <Footer />
